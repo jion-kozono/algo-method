@@ -23,6 +23,7 @@
     "vector": "cpp",
     "ranges": "cpp",
     "utility": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "forward_list": "cpp"
   }
 }
