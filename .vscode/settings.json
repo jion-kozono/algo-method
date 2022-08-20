@@ -24,6 +24,9 @@
     "ranges": "cpp",
     "utility": "cpp",
     "iostream": "cpp",
-    "forward_list": "cpp"
+    "forward_list": "cpp",
+    "__bit_reference": "cpp",
+    "chrono": "cpp",
+    "algorithm": "cpp"
   }
 }
