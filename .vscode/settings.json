@@ -27,6 +27,11 @@
     "forward_list": "cpp",
     "__bit_reference": "cpp",
     "chrono": "cpp",
-    "algorithm": "cpp"
-  }
+    "algorithm": "cpp",
+    "ostream": "cpp"
+  },
+  "lldb.displayFormat": "auto",
+  "lldb.showDisassembly": "auto",
+  "lldb.dereferencePointers": false,
+  "lldb.consoleMode": "evaluate"
 }
