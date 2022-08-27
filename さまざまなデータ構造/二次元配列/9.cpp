@@ -28,19 +28,40 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
 }
 
 int main() {
-  int H, W;
-  cin >> H >> W;
-  char S[H][W], T[H][W];
+  int N, Q;
+  cin >> N >> Q;
 
-  rep(i, H) rep(j, W) cin >> S[i][j];
-  rep(i, H) rep(j, W) cin >> T[i][j];
+  vector<vector<int>> isFollow(N, vector<int>(N, 0));
 
-  int count = 0;
-  rep(i, H) rep(j, W) {
-    if(S[i][j] != T[i][j])
-      count++;
+  rep(i, Q) {
+    int query;
+    cin >> query;
+
+    if(query == 0) {
+      // Follow
+      int x, y;
+      cin >> x >> y;
+      isFollow[x][y] = 1;
+    } else if(query == 1) {
+      // GetFollowers
+      int z;
+      cin >> z;
+
+      vector<int> zFollowers;
+      rep(j, N) {
+        if(isFollow[j][z] == 1)
+          zFollowers.push_back(j);
+      }
+
+      int z_size = zFollowers.size();
+      if(z_size > 0) {
+        sort(ALL(zFollowers));
+        rep(j, z_size) { cout << zFollowers[j] << " "; }
+        cout << endl;
+      } else {
+        debug("No");
+      }
+    }
   }
-
-  debug(count);
   return 0;
 }

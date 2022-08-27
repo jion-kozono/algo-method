@@ -27,40 +27,32 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
   }
 }
 
-void changeColor(int &original) { original = 1 - original; }
-bool isBlack(int c) { return c == 1; }
-
+int directionsX[4] = {0, -1, 0, 1};
+int directionsY[4] = {-1, 0, 1, 0};
 int main() {
-  int N;
-  string T;
-  cin >> N >> T;
+  int H, W;
+  cin >> H >> W;
+  vector<vector<int>> grid(H, vector<int>(W));
 
-  vector<int> studentM(N);
-  vector<vector<string>> studentColors(N);
-
-  rep(i, N) {
-    int m;
-    cin >> m;
-    studentM[i] = m;
-    rep(j, m) {
-      string color;
-      cin >> color;
-      studentColors[i].push_back(color);
-    }
+  rep(i, H) {
+    string s;
+    cin >> s;
+    rep(j, W) { grid[i][j] = s[j] == '#' ? 1 : 0; }
   }
 
-  int count = 0;
-  rep(i, N) {
-    bool flag = false;
-    rep(j, studentColors[i].size()) {
-      if(studentColors[i][j] == T) {
-        flag = true;
-        break;
-      }
+  int Q;
+  cin >> Q;
+  rep(i, Q) {
+    int count = 0;
+    int p, q;
+    cin >> p >> q;
+    rep(d, 4) {
+      int x = p + directionsX[d];
+      int y = q + directionsY[d];
+      if(0 <= x && x < H && 0 <= y && y < W)
+        count += grid[x][y];
     }
-    if(flag)
-      count++;
+    debug(count);
   }
-  debug(count);
   return 0;
 }

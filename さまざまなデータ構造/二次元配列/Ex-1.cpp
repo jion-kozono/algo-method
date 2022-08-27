@@ -27,20 +27,37 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
   }
 }
 
+void changeColor(int &original) { original = 1 - original; }
+bool isBlack(int c) { return c == 1; }
+
 int main() {
   int H, W;
   cin >> H >> W;
-  char S[H][W], T[H][W];
+  vector<vector<int>> S(H, vector<int>(W));
+  vector<int> sumRow(H, 0), sumColumn(W, 0);
+  int dx[5] = {0, 1, 0, -1, 0};
+  int dy[5] = {0, 0, 1, 0, -1};
 
-  rep(i, H) rep(j, W) cin >> S[i][j];
-  rep(i, H) rep(j, W) cin >> T[i][j];
-
-  int count = 0;
   rep(i, H) rep(j, W) {
-    if(S[i][j] != T[i][j])
-      count++;
+    char c;
+    cin >> c;
+    if(c == '#') {
+      S[i][j] = 1;
+      sumRow[i]++;
+      sumColumn[j]++;
+    } else {
+      S[i][j] = 0;
+    }
   }
+  int Q;
+  cin >> Q;
 
-  debug(count);
+  rep(i, Q) {
+    int p, q;
+    cin >> p >> q;
+
+    int count = sumRow[p] + sumColumn[q] - S[p][q];
+    debug(count);
+  }
   return 0;
 }

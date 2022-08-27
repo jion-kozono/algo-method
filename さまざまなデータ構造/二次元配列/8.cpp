@@ -27,58 +27,40 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
   }
 }
 
-void changeColorAndSumOfBlack(int &original, int &sum) {
-
-  // 自作コード
-  // original = 1 - original;
-  // sum += original ? 1 : -1;
-
-  // 模範解答
-  sum -= original;
-  original = 1 - original;
-  sum += original;
-}
+void changeColor(int &original) { original = 1 - original; }
 bool isBlack(int c) { return c == 1; }
 
 int main() {
-  int H, W;
-  cin >> H >> W;
-  vector<vector<int>> S(H, vector<int>(W));
-  int sumBlack = 0;
-  int dx[5] = {0, 1, 0, -1, 0};
-  int dy[5] = {0, 0, 1, 0, -1};
+  int N;
+  string T;
+  cin >> N >> T;
 
-  rep(i, H) rep(j, W) {
-    char c;
-    cin >> c;
-    if(c == '#') {
-      S[i][j] = 1;
-      sumBlack++;
-    } else {
-      S[i][j] = 0;
+  vector<int> studentM(N);
+  vector<vector<string>> studentColors(N);
+
+  rep(i, N) {
+    int m;
+    cin >> m;
+    studentM[i] = m;
+    rep(j, m) {
+      string color;
+      cin >> color;
+      studentColors[i].push_back(color);
     }
   }
-  int Q;
-  cin >> Q;
 
-  rep(i, Q) {
-    int query;
-    cin >> query;
-
-    if(query == 0) {
-      // push
-      int p, q;
-      cin >> p >> q;
-      rep(d, 5) {
-        int x = p + dx[d], y = q + dy[d];
-        if(0 <= x && x < H && 0 <= y && y < W) {
-          changeColorAndSumOfBlack(S[x][y], sumBlack);
-        }
+  int count = 0;
+  rep(i, N) {
+    bool flag = false;
+    rep(j, studentColors[i].size()) {
+      if(studentColors[i][j] == T) {
+        flag = true;
+        break;
       }
-    } else if(query == 1) {
-      // get
-      debug(sumBlack);
     }
+    if(flag)
+      count++;
   }
+  debug(count);
   return 0;
 }

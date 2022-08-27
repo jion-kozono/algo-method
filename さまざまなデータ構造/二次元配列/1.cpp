@@ -30,17 +30,13 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
 int main() {
   int H, W;
   cin >> H >> W;
-  char S[H][W], T[H][W];
-
-  rep(i, H) rep(j, W) cin >> S[i][j];
-  rep(i, H) rep(j, W) cin >> T[i][j];
-
+  vector<vector<int>> grid(H, vector<int>(W));
   int count = 0;
-  rep(i, H) rep(j, W) {
-    if(S[i][j] != T[i][j])
-      count++;
+  rep(i, H) {
+    string s;
+    cin >> s;
+    rep(j, s.size()) { count += s[j] == 'o' ? 1 : 0; }
   }
-
   debug(count);
   return 0;
 }

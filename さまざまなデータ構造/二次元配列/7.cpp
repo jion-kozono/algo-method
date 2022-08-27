@@ -27,37 +27,58 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
   }
 }
 
-void changeColor(int &original) { original = 1 - original; }
-bool isBlack(int c) { return c == 1; }
+int N, X;
+int dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+int dy[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+int get_live_count(int x, int y, vector<vector<int>> &G) {
+  int count = 0;
+  rep(d, 8) {
+    int nx = x + dx[d];
+    int ny = y + dy[d];
+    if(0 <= nx && nx < N && 0 <= ny && ny < N)
+      count += G[nx][ny];
+  }
+  return count;
+}
 
 int main() {
-  int H, W;
-  cin >> H >> W;
-  vector<vector<int>> S(H, vector<int>(W));
-  vector<int> sumRow(H, 0), sumColumn(W, 0);
+  cin >> N >> X;
+  vector<vector<int>> G(N, vector<int>(N));
   int dx[5] = {0, 1, 0, -1, 0};
   int dy[5] = {0, 0, 1, 0, -1};
 
-  rep(i, H) rep(j, W) {
+  rep(i, N) rep(j, N) {
     char c;
     cin >> c;
-    if(c == '#') {
-      S[i][j] = 1;
-      sumRow[i]++;
-      sumColumn[j]++;
-    } else {
-      S[i][j] = 0;
+    G[i][j] = c == '#' ? 1 : 0;
+  }
+  rep(x, X) {
+    //　全てのマスが他の更新の影響を受けないようにするために別配列をGからコピー。
+    vector<vector<int>> original = G;
+    rep(i, N) {
+      rep(j, N) {
+        int live_count = get_live_count(i, j, original);
+        // 自身が死んでいるかつ x=3 ならば生きたマスとなる。
+        if(original[i][j] == 0 && live_count == 3) {
+          G[i][j]++;
+        }
+        // 自身が生きているかつ x=2 or 3 ならば生き続ける。
+        else if(original[i][j] && (live_count == 2 || live_count == 3))
+          continue;
+        // 自身が生きているかつ x≤1 ならば過疎により死滅する。
+        else if(original[i][j] && live_count <= 1)
+          G[i][j]--;
+        // 自身が生きているかつ x≥4 ならば過密により死滅する。
+        else if(original[i][j] && live_count >= 4)
+          G[i][j]--;
+      }
     }
   }
-  int Q;
-  cin >> Q;
 
-  rep(i, Q) {
-    int p, q;
-    cin >> p >> q;
-
-    int count = sumRow[p] + sumColumn[q] - S[p][q];
-    debug(count);
+  rep(i, N) {
+    rep(j, N) { cout << (G[i][j] ? '#' : '.'); }
+    cout << endl;
   }
   return 0;
 }

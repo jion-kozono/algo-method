@@ -27,20 +27,35 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
   }
 }
 
+int directionX[9] = {-1, -1, -1, 0, 0, 0, 1, 1, 1};
+int directionY[9] = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
 int main() {
-  int H, W;
-  cin >> H >> W;
-  char S[H][W], T[H][W];
+  int H, W, x, y;
+  cin >> H >> W >> x >> y;
+  vector<vector<char>> grid(H, vector<char>(W));
 
-  rep(i, H) rep(j, W) cin >> S[i][j];
-  rep(i, H) rep(j, W) cin >> T[i][j];
-
-  int count = 0;
   rep(i, H) rep(j, W) {
-    if(S[i][j] != T[i][j])
-      count++;
+    char c;
+    cin >> c;
+    grid[i][j] = c;
   }
 
-  debug(count);
+  for(int i = x - 1; i < x + 2; ++i) {
+    for(int j = y - 1; j < y + 2; ++j) {
+      cout << grid[i][j];
+    }
+    cout << endl;
+  }
+  //以下より上の方が効率が良い
+  // rep(i, 9) {
+  //   int h = x + directionX[i];
+  //   int w = y + directionY[i];
+
+  //   cout << grid[h][w];
+  //   if((i + 1) % 3 == 0) {
+  //     cout << endl;
+  //   }
+  // }
+
   return 0;
 }
