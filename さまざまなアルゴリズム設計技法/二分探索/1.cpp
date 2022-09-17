@@ -38,13 +38,13 @@ int main() {
 
   while(right - left > 1e-4) {
     double mid = (right + left) / 2;
-    if(f(mid) < N) {
-      left = mid;
-    } else {
+    if(f(mid) >= N) {
       right = mid;
+    } else {
+      left = mid;
     }
   }
 
-  printf("%.12lf", left);
+  printf("%.12lf", right);
   return 0;
 }
