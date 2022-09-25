@@ -31,8 +31,20 @@ int main() {
   int N;
   cin >> N;
 
-  ll ans = pow(10, N);
+  string ans = "1";
+  rep(_, N) { ans += "0"; }
   debug(ans);
 
   return 0;
 }
+
+// 以下だと数が大きくなりすぎて扱えなくなる可能性がある
+// int main() {
+//   int N;
+//   cin >> N;
+
+//   ll ans = pow(10, N);
+//   debug(ans);
+
+//   return 0;
+// }
