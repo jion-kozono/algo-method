@@ -30,7 +30,11 @@ template <typename T> void view(const std::vector<std::vector<T>> &vv) {
 int main() {
   int N;
   cin >> N;
-  int ans = 2 << N;
+  if(N == 0) {
+    debug(1);
+    return 0;
+  }
+  int ans = 2 << (N - 1);
   debug(ans);
   return 0;
 }
